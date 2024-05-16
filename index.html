@@ -3,10 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solar Tracker Info</title>
+    <title>Solar Tracker Control</title>
+    <script>
+        function sendRequest(action) {
+            fetch(`http://YOUR_ESP32_IP_ADDRESS/${action}`)
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function startTracker() {
+            sendRequest('start');
+        }
+
+        function stopTracker() {
+            sendRequest('stop');
+        }
+    </script>
 </head>
 <body>
-    <h1>Solar Tracker Information</h1>
+    <h1>Solar Tracker Control</h1>
+    <button onclick="startTracker()">Bật</button>
+    <button onclick="stopTracker()">Tắt</button>
+    <h2>Google Sheets Link</h2>
     <p>Click the link below to view the current angle of the solar tracker:</p>
     <a href="https://docs.google.com/spreadsheets/d/1QUfpaO9su_NQF5XbyIxfUH5SaxCRs6xS9sCpWdRqu-E/edit?usp=sharing" target="_blank">Góc xoay hiện tại của solar tracker</a>
 </body>
