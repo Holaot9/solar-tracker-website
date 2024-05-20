@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solar Tracker Info</title>
-    <script>
-        function sendCommand(command) {
-            const xhttp = new XMLHttpRequest();
-            xhttp.open("GET", `http://YOUR_ESP32_IP_ADDRESS/${command}`, true);
-            xhttp.send();
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar Tracker Info</title>
+  <script>
+    function sendCommand(command) {
+      const xhttp = new XMLHttpRequest();
+      xhttp.open("GET", `http://${location.hostname}/${command}`, true);
+      xhttp.send();
+    }
 
-        function toggleTracker() {
-            const trackerState = document.getElementById("trackerToggle").checked ? "on" : "off";
-            sendCommand(trackerState);
-            if (trackerState === "off") {
-                document.getElementById("angleInputSection").style.display = "block";
-            } else {
-                document.getElementById("angleInputSection").style.display = "none";
-            }
-        }
+    function toggleTracker() {
+      const trackerState = document.getElementById("trackerToggle").checked ? "manual" : "auto";
+      sendCommand(trackerState);
+      if (trackerState === "manual") {
+        document.getElementById("angleInputSection").style.display = "block";
+      } else {
+        document.getElementById("angleInputSection").style.display = "none";
+      }
+    }
 
-        function setAngle() {
-            const angle = document.getElementById("angleInput").value;
-            sendCommand(`set_angle?value=${angle}`);
-        }
-    </script>
+    function setAngle() {
+      const angle = document.getElementById("angleInput").value;
+      sendCommand(`set_angle?value=${angle}`);
+    }
+  </script>
 </head>
 <body>
-    <h1>Solar Tracker Information</h1>
-    <p>Click the link below to view the current angle of the solar tracker:</p>
-    <a href="https://docs.google.com/spreadsheets/d/1QUfpaO9su_NQF5XbyIxfUH5SaxCRs6xS9sCpWdRqu-E/edit?usp=sharing" target="_blank">Góc xoay hiện tại của solar tracker</a>
-    <br><br>
-    <label for="trackerToggle">Bật/Tắt Solar Tracker:</label>
-    <input type="checkbox" id="trackerToggle" onclick="toggleTracker()">
-    <br><br>
-    <div id="angleInputSection" style="display: none;">
-        <label for="angleInput">Nhập góc xoay:</label>
-        <input type="number" id="angleInput" min="0" max="180">
-        <button onclick="setAngle()">Enter</button>
-    </div>
+  <h1>Solar Tracker Information</h1>
+  <p>Click the link below to view the current angle of the solar tracker:</p>
+  <a href="https://docs.google.com/spreadsheets/d/1QUfpaO9su_NQF5XbyIxfUH5SaxCRs6xS9sCpWdRqu-E/edit?usp=sharing" target="_blank">Góc xoay hiện tại của solar tracker</a>
+  <br><br>
+  <label for="trackerToggle">Bật/Tắt Solar Tracker:</label>
+  <input type="checkbox" id="trackerToggle" onclick="toggleTracker()">
+  <br><br>
+  <div id="angleInputSection" style="display: none;">
+    <label for="angleInput">Nhập góc xoay:</label>
+    <input type="number" id="angleInput" min="0" max="180">
+    <button onclick="setAngle()">Enter</button>
+  </div>
 </body>
 </html>
-
